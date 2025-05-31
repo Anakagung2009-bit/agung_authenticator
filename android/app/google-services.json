@@ -1,0 +1,407 @@
+{
+  "project_info": {
+    "project_number": "324982137742",
+    "firebase_url": "https://agung-dev-project-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "agung-dev-project",
+    "storage_bucket": "agung-dev-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:41df33e9379d666a1ffadf",
+        "android_client_info": {
+          "package_name": "com.agungdev.apass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:bd381517d1c756b21ffadf",
+        "android_client_info": {
+          "package_name": "com.agungdev.auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:815713425593baba1ffadf",
+        "android_client_info": {
+          "package_name": "com.agungdev.filessahring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:908df6dcc7a52c041ffadf",
+        "android_client_info": {
+          "package_name": "com.agungdev.music"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:2046840027e40e461ffadf",
+        "android_client_info": {
+          "package_name": "com.agungdev.news"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:df692e9e9cd608ec1ffadf",
+        "android_client_info": {
+          "package_name": "com.agungdev.notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:ac42af78d304aec11ffadf",
+        "android_client_info": {
+          "package_name": "com.agungdev.savings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:1283f87b85a66d221ffadf",
+        "android_client_info": {
+          "package_name": "com.agungdev.solver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:1d7fab18477147351ffadf",
+        "android_client_info": {
+          "package_name": "com.agungdev.tasks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:316cc8b8e2dba9991ffadf",
+        "android_client_info": {
+          "package_name": "com.agungdev.weather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324982137742:android:82e152be901528661ffadf",
+        "android_client_info": {
+          "package_name": "com.example.agung_tasks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9Cng0eir-2SOa9WPgYvRa4bEhZAv96g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324982137742-o4e3vvlfd68r7aog69kkib48nla0ol8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "324982137742-000cbiu8qla274o2t67uqo3cv4i2g81s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.celengan"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
