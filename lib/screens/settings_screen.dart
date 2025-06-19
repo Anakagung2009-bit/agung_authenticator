@@ -1,3 +1,4 @@
+import 'package:agung_auth/screens/about_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_auth/local_auth.dart';
@@ -6,6 +7,12 @@ import 'package:provider/provider.dart';
 import '../services/auth_check.dart';
 import '../services/theme_service.dart';
 import '../services/totp_service.dart';
+import 'package:flutter_autoupdate/flutter_autoupdate.dart';
+import 'package:pub_semver/pub_semver.dart'; // untuk Version.parse()
+import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
+
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -345,27 +352,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: const Text('About the App'),
             subtitle: const Text('Agung Auth - Authenticator App'),
             leading: const Icon(Icons.info_outline, color: Colors.blueAccent),
-            onTap: () {
-              showAboutDialog(
-                context: context,
-                applicationIcon: const CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 24,
-                  child: Icon(Icons.lock_outline, size: 32, color: Colors.blueAccent),
-                ),
-                applicationName: 'Agung Auth',
-                applicationLegalese: '© 2025 Agung Dev',
-                children: [
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Agung Auth is a modern authenticator app that supports TOTP'
-                  ),
-                  const SizedBox(height: 16),
-                ],
-              );
-            },
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()))
           ),
-
+          ListTile(
+            title: const Text('Check For Update'),
+            leading: const Icon(Icons.system_update),
+            onTap: () => checkForUpdate(context),
+          ),
         ],
       ),
     );
@@ -458,4 +451,62 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
+
+  void checkForUpdate(BuildContext context) async {
+    final updater = UpdateManager(
+      versionUrl: 'https://agung-dev-project.web.app/version.json',
+    );
+
+    final result = await updater.fetchUpdates();
+
+    // Cek versi lokal
+    final info = await PackageInfo.fromPlatform();
+    final versionString = info.version.split('+').first; // hanya ambil "1.0.4"
+    final currentVersion = Version.parse(versionString);
+
+
+    print('🧪 Current App Version: $currentVersion');
+    print('🧪 Latest Version from JSON: ${result?.latestVersion}');
+    print('🧪 result: $result');
+
+    if (result != null && Version.parse(result.latestVersion.toString()) > currentVersion) {
+        print('🧪 latestVersion: ${result.latestVersion}');
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('An update is available'),
+          content: Text(
+            'Agung Auth ${result.latestVersion} is available.\n\n${result.releaseNotes ?? ""}',
+          ),
+          actions: [
+            TextButton(
+              child: const Text('Download from GitHub'),
+              onPressed: () async {
+                Navigator.pop(context);
+                await launchUrl(Uri.parse(result.downloadUrl));
+              },
+            ),
+            // TextButton(
+            //   child: const Text('Automatic Update'),
+            //   onPressed: () async {
+            //     Navigator.pop(context);
+            //     final update = await result.initializeUpdate();
+            //     update?.stream.listen((event) async {
+            //       if (event.completed) {
+            //         await update?.close();
+            //         await result.runUpdate(event.path, autoExit: true, exitDelay: 3000);
+            //       }
+            //     });
+            //   },
+            // ),
+          ],
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('App is up to date!')),
+      );
+    }
+  }
+
 }

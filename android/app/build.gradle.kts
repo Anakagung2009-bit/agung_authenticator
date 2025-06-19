@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.agung_auth"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -27,7 +27,7 @@ android {
     minSdk = flutter.minSdkVersion
     targetSdk = flutter.targetSdkVersion
     versionCode = 1 // <-- HARUS integer
-    versionName = "1.0.1" // <-- Ini boleh string
+    versionName = "1.0.4" // <-- Ini boleh string
     }   
 
     buildTypes {
@@ -43,6 +43,8 @@ dependencies {
     implementation("androidx.core:core:1.6.0")
     implementation("androidx.biometric:biometric:1.1.0")
     implementation("androidx.fragment:fragment:1.3.6")
+    implementation("androidx.credentials:credentials:1.6.0-alpha02")
+    implementation("androidx.credentials:credentials-play-services-auth:1.6.0-alpha02")
 }
 
 

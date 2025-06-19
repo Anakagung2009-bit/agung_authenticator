@@ -1,7 +1,7 @@
 name: agung_auth
 description: "A TOTP Authenticator app with sync capability"
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.4
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -30,7 +30,10 @@ dependencies:
   flutter_launcher_icons: ^0.14.3
   intl: ^0.20.2
   otpauth_migration: ^0.0.7
-
+  flutter_autoupdate: ^1.0.0
+  pub_semver: ^2.2.0
+  package_info_plus: ^8.3.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -46,3 +49,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/icons/agung_auth.png

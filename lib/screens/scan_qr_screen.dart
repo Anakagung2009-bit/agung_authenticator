@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import '../services/totp_service.dart';
+import '../services/passkey_platform.dart';
+import 'dart:convert';
 
 class ScanQRScreen extends StatefulWidget {
   @override
@@ -11,23 +13,26 @@ class _ScanQRScreenState extends State<ScanQRScreen> {
   final TOTPService _totpService = TOTPService();
   bool _isProcessing = false;
   String? _errorMessage;
+  bool _hasScanned = false;
+
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Scan QR Code TOTP'),
+        title: Text('Scan QR Code'),
       ),
       body: Stack(
         children: [
           MobileScanner(
             onDetect: (capture) {
               final List<Barcode> barcodes = capture.barcodes;
-              if (barcodes.isNotEmpty && !_isProcessing) {
+              if (barcodes.isNotEmpty && !_isProcessing && !_hasScanned) {
                 final String? rawValue = barcodes.first.rawValue;
                 if (rawValue != null && rawValue.isNotEmpty) {
+                  _hasScanned = true; // langsung tandai sudah scan agar tidak scan ulang
                   _processQRCode(rawValue);
                 }
               }
@@ -67,7 +72,7 @@ class _ScanQRScreenState extends State<ScanQRScreen> {
               padding: EdgeInsets.all(16),
               color: Colors.black54,
               child: Text(
-                'Point the camera at the TOTP QR Code',
+                'Point the camera at the QR Code',
                 style: TextStyle(color: Colors.white),
                 textAlign: TextAlign.center,
               ),
@@ -85,47 +90,14 @@ class _ScanQRScreenState extends State<ScanQRScreen> {
     });
 
     try {
-      // Tambahkan log untuk debugging
       print('QR Code data: $data');
-      
+
       if (data.startsWith('otpauth://totp/')) {
-        try {
-          final totpData = _totpService.parseTotpUri(data);
-          
-          if (totpData.containsKey('name') && totpData.containsKey('secret')) {
-            await _totpService.addTOTP(
-              name: totpData['name']!,
-              secret: totpData['secret']!,
-            );
-            
-            if (mounted) {
-              Navigator.pop(context);
-            }
-          } else {
-            throw Exception('Format data TOTP tidak valid');
-          }
-        } catch (parseError) {
-          print('Error parsing TOTP URI: $parseError');
-          setState(() {
-            _errorMessage = 'Format QR Code TOTP tidak valid: ${parseError.toString()}';
-            _isProcessing = false;
-          });
-        }
+        await _handleTotpQr(data);
       } else {
         setState(() {
-          _errorMessage = 'QR Code bukan TOTP yang valid';
+          _errorMessage = 'QR Code tidak dikenali.';
           _isProcessing = false;
-        });
-      }
-      
-      // Hapus pesan error setelah beberapa detik
-      if (_errorMessage != null) {
-        Future.delayed(Duration(seconds: 3), () {
-          if (mounted) {
-            setState(() {
-              _errorMessage = null;
-            });
-          }
         });
       }
     } catch (e) {
@@ -134,13 +106,36 @@ class _ScanQRScreenState extends State<ScanQRScreen> {
         _errorMessage = 'Error: ${e.toString()}';
         _isProcessing = false;
       });
-      
+    }
+
+    // Auto-clear error
+    if (_errorMessage != null) {
       Future.delayed(Duration(seconds: 3), () {
         if (mounted) {
-          setState(() {
-            _errorMessage = null;
-          });
+          setState(() => _errorMessage = null);
         }
+      });
+    }
+  }
+
+  Future<void> _handleTotpQr(String data) async {
+    try {
+      final totpData = _totpService.parseTotpUri(data);
+      if (totpData.containsKey('name') && totpData.containsKey('secret')) {
+        await _totpService.addTOTP(
+          name: totpData['name']!,
+          secret: totpData['secret']!,
+        );
+
+        if (mounted) Navigator.pop(context);
+      } else {
+        throw Exception('Format data TOTP tidak valid');
+      }
+    } catch (e) {
+      print('TOTP parsing error: $e');
+      setState(() {
+        _errorMessage = 'TOTP QR tidak valid: ${e.toString()}';
+        _isProcessing = false;
       });
     }
   }

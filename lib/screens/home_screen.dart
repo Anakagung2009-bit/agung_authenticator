@@ -262,6 +262,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ],
       ) : null,
       bottomNavigationBar: NavigationBar(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? Colors.black
+            : Colors.white,
         onDestinationSelected: (int index) {
           setState(() {
             _selectedIndex = index;
@@ -280,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             label: 'Passwords',
           ),
         ],
-      )
+      ),
     );
   }
   

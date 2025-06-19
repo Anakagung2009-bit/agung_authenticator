@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.agung_auth">
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name="${applicationName}"
@@ -30,7 +32,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-        <!-- ✅ Letakkan di dalam <application> -->
+        <!-- TOTP Widget -->
         <receiver android:name=".TOTPWidgetProvider" android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -39,9 +41,21 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/totp_widget_info" />
         </receiver>
+
+        <!-- FileProvider for auto update -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
-    <!-- Queries tetap di luar -->
+    <!-- Intents for external apps -->
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT" />
@@ -52,4 +66,5 @@
             <data android:scheme="https" />
         </intent>
     </queries>
+
 </manifest>

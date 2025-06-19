@@ -13,6 +13,9 @@ import 'services/auth_check.dart';
 import 'services/theme_service.dart';
 import 'services/totp_service.dart';
 
+import 'services/update_service.dart';
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -89,6 +92,11 @@ class _AuthWrapperState extends State<AuthWrapper> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _syncEncryptionKey();
+
+      // Tambahkan ini untuk auto check update
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      UpdateService.checkForUpdate(context);
+    });
   }
 
   Future<void> _syncEncryptionKey() async {

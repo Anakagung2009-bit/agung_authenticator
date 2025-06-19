@@ -161,7 +161,6 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Password', style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
         scrolledUnderElevation: 0,
       ),
       body: Form(
@@ -292,7 +291,7 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
               style: FilledButton.styleFrom(
                 minimumSize: Size(double.infinity, 56),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(100),
                 ),
               ),
               child: Text('Generate Secure Password'),
@@ -305,7 +304,7 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
               style: FilledButton.styleFrom(
                 minimumSize: Size(double.infinity, 56),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(100),
                 ),
               ),
               child: _isLoading

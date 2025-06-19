@@ -216,13 +216,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   
-                  // Forgot Password
+                 // Forgot Password
                   if (_isLogin)
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () {
-                          // Handle forgot password
+                        onPressed: () async {
+                          final url = Uri.parse('https://agungdev.com/en/forgotpassword');
+                          if (await canLaunchUrl(url)) {
+                            await launchUrl(url, mode: LaunchMode.externalApplication);
+                          } else {
+                            // Optional: Handle error if the URL can't be opened
+                            debugPrint('Could not launch $url');
+                          }
                         },
                         child: Text(
                           'Forgot Password?',
@@ -233,7 +239,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                  
                   const SizedBox(height: 8),
                   
                   // Error Message
