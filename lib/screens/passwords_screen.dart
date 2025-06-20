@@ -457,15 +457,15 @@ class _PasswordsScreenState extends State<PasswordsScreen> {
           searchController: _searchController,
           onMenuPressed: () => _scaffoldKey.currentState?.openDrawer(),
         ),
-        drawer: CustomDrawer(
-          authService: _authService,
-          onExportPressed: () {
-            // Handle export
-          },
-          onHowItWorksPressed: () {
-            // Handle how it works
-          },
-        ),
+        // drawer: CustomDrawer(
+        //   authService: _authService,
+        //   onExportPressed: () {
+        //     // Handle export
+        //   },
+        //   onHowItWorksPressed: () {
+        //     // Handle how it works
+        //   },
+        // ),
         body: StreamBuilder<List<PasswordModel>>(
           stream: _passwordService.getPasswords(),
           builder: (context, snapshot) {

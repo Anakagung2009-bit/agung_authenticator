@@ -124,63 +124,75 @@ class _CodeCardState extends State<CodeCard> with SingleTickerProviderStateMixin
                               color: colorScheme.onSurface,
                             ),
                           ),
+                          SizedBox(height: 8),
+                          // Code TOTP
+                          AnimatedContainer(
+                            duration: Duration(milliseconds: 300),
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: _isCopied
+                                  ? colorScheme.tertiaryContainer
+                                  : colorScheme.secondaryContainer,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  firstHalf,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Monospace',
+                                    letterSpacing: 1,
+                                    color: _isCopied
+                                        ? colorScheme.onTertiaryContainer
+                                        : colorScheme.onSecondaryContainer,
+                                  ),
+                                ),
+                                SizedBox(width: 4),
+                                Text(
+                                  secondHalf,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Monospace',
+                                    letterSpacing: 1,
+                                    color: _isCopied
+                                        ? colorScheme.onTertiaryContainer
+                                        : colorScheme.onSecondaryContainer,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    SizedBox(width: 8),
-                    Column(
+                    // Circular Progress Indicator
+                    Stack(
+                      alignment: Alignment.center,
                       children: [
-                        AnimatedContainer(
-                          duration: Duration(milliseconds: 300),
-                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: _isCopied
-                                ? colorScheme.tertiaryContainer
-                                : colorScheme.secondaryContainer,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                firstHalf,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Monospace',
-                                  letterSpacing: 1,
-                                  color: _isCopied
-                                      ? colorScheme.onTertiaryContainer
-                                      : colorScheme.onSecondaryContainer,
-                                ),
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                secondHalf,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Monospace',
-                                  letterSpacing: 1,
-                                  color: _isCopied
-                                      ? colorScheme.onTertiaryContainer
-                                      : colorScheme.onSecondaryContainer,
-                                ),
-                              ),
-                            ],
+                        SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: CircularProgressIndicator(
+                            value: widget.timeLeft / 30,
+                            backgroundColor: colorScheme.surfaceVariant,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              widget.timeLeft < 5 ? colorScheme.error : colorScheme.primary,
+                            ),
+                            strokeWidth: 4,
                           ),
                         ),
-                        SizedBox(height: 8),
-                        SizedBox(
-                          width: 120,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: LinearProgressIndicator(
-                              value: widget.timeLeft / 30,
-                              backgroundColor: colorScheme.surfaceVariant,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  widget.timeLeft < 5 ? colorScheme.error : colorScheme.primary),
-                              minHeight: 6,
-                            ),
+                        Text(
+                          '${widget.timeLeft}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: widget.timeLeft < 5 
+                                ? colorScheme.error 
+                                : colorScheme.onSurface,
                           ),
                         ),
                       ],

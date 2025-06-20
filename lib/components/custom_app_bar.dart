@@ -1,6 +1,11 @@
+import 'package:agung_auth/screens/export_authenticator_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../services/auth_service.dart';
+import 'package:provider/provider.dart'; // Import provider package
+import 'package:agung_auth/screens/settings_screen.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
@@ -9,9 +14,9 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final VoidCallback onMenuPressed;
 
   const CustomAppBar({
-    Key? key,
-    required this.searchController,
-    required this.onMenuPressed,
+  Key? key,
+  required this.searchController,
+  required this.onMenuPressed,
   }) : super(key: key);
 
   @override
@@ -54,6 +59,7 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context); // Access authService
     final colorScheme = Theme.of(context).colorScheme;
     final user = FirebaseAuth.instance.currentUser;
     final hasValidPhoto = user?.photoURL != null &&
@@ -68,28 +74,28 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
       surfaceTintColor: colorScheme.surfaceTint,
       centerTitle: false,
       titleSpacing: 0,
-      leading: Builder(
-        builder: (context) => IconButton(
-          icon: Icon(
-            Symbols.menu_rounded,
-            color: colorScheme.onSurface,
-            weight: 500,
-            size: 28,
-            fill: 0.2,
-          ),
-          onPressed: widget.onMenuPressed,
-          tooltip: 'Menu',
-          iconSize: 28,
-          style: IconButton.styleFrom(
-            foregroundColor: colorScheme.onSurface,
-            backgroundColor: Colors.transparent,
-            hoverColor: colorScheme.onSurface.withOpacity(0.08),
-            highlightColor: colorScheme.onSurface.withOpacity(0.12),
-          ),
-        ),
-      ),
+      // leading: Builder(
+      //   builder: (context) => IconButton(
+      //     icon: Icon(
+      //       Symbols.menu_rounded,
+      //       color: colorScheme.onSurface,
+      //       weight: 500,
+      //       size: 28,
+      //       fill: 0.2,
+      //     ),
+      //     onPressed: widget.onMenuPressed,
+      //     tooltip: 'Menu',
+      //     iconSize: 28,
+      //     style: IconButton.styleFrom(
+      //       foregroundColor: colorScheme.onSurface,
+      //       backgroundColor: Colors.transparent,
+      //       hoverColor: colorScheme.onSurface.withOpacity(0.08),
+      //       highlightColor: colorScheme.onSurface.withOpacity(0.12),
+      //     ),
+      //   ),
+      // ),
       title: Padding(
-        padding: const EdgeInsets.only(right: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: AnimatedBuilder(
           animation: _searchFocusController,
           builder: (context, child) {
@@ -106,6 +112,53 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
                 weight: 500,
                 fill: _isSearchFocused ? 1 : 0,
               ),
+              trailing: [
+                IconButton(
+                  icon: Icon(
+                    Symbols.cloud_done_rounded,
+                    color: Colors.green,
+                    size: 24,
+                    weight: 500,
+                    fill: 1,
+                  ),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          children: [
+                            Icon(
+                              Symbols.cloud_done_rounded,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Your codes and passwords are securely stored with Agung Dev servers',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                        duration: Duration(seconds: 4),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        margin: EdgeInsets.all(16),
+                      ),
+                    );
+                  },
+                  tooltip: 'Secure Cloud Storage',
+                  style: IconButton.styleFrom(
+                    foregroundColor: Colors.green,
+                    backgroundColor: Colors.transparent,
+                    hoverColor: Colors.green.withOpacity(0.08),
+                    highlightColor: Colors.green.withOpacity(0.12),
+                  ),
+                ),
+              ],
               padding: MaterialStateProperty.all<EdgeInsets>(
                 const EdgeInsets.symmetric(horizontal: 16.0),
               ),
@@ -145,7 +198,115 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
             clipBehavior: Clip.antiAlias,
             child: InkWell(
               onTap: () {
-                // Handle profile tap
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(height: 24),
+                          CircleAvatar(
+                            backgroundImage: hasValidPhoto
+                                ? NetworkImage(user!.photoURL!)
+                                : null,
+                            radius: 40,
+                            backgroundColor: colorScheme.primaryContainer,
+                            child: !hasValidPhoto
+                                ? Icon(
+                                    Symbols.account_circle_rounded,
+                                    color: colorScheme.onPrimaryContainer,
+                                    size: 48,
+                                    weight: 500,
+                                  )
+                                : null,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            user?.displayName ?? 'Guest User',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            user?.email ?? 'No email',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          const SizedBox(height: 16),
+                          const Divider(height: 1),
+                          ListTile(
+                            leading: Icon(Symbols.settings_rounded, size: 24),
+                            title: Text('Settings'),
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SettingsScreen()),
+                              );
+                            },
+                          ),
+                          const Divider(height: 1),
+                          ListTile(
+                            leading: Icon(Symbols.help_outline_rounded, size: 24),
+                            title: Text('Transfer Codes'),
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ExportAuthenticatorScreen()),
+                              );
+                            },
+                          ),
+                          const Divider(height: 1),
+
+                          ListTile(
+                            leading: const Icon(Icons.logout),
+                            title: const Text('Logout'),
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text('Logout'),
+                                  content: const Text('Are you sure you want to logout?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    FilledButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        authService.signOut(); // Use the accessed authService
+                                      },
+                                      child: const Text('Logout'),
+                                      style: FilledButton.styleFrom(
+                                        backgroundColor: Theme.of(context).colorScheme.errorContainer,
+                                        foregroundColor: Theme.of(context).colorScheme.onErrorContainer,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          const Divider(height: 1),
+                          TextButton(
+                            onPressed: () {
+                              launchUrl(
+                                Uri.parse('https://agungdev.com/privacy-policy'),
+                                mode: LaunchMode.externalApplication,
+                              );
+                            },
+                            child: const Text('Privacy Policy'),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
+                      ),
+                    );
+                  },
+                );
               },
               splashColor: colorScheme.primary.withOpacity(0.1),
               highlightColor: colorScheme.primary.withOpacity(0.05),

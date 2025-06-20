@@ -173,11 +173,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             },
           )
         : null,
-      drawer: CustomDrawer(
-        authService: authService,
-        onExportPressed: _showExportDialog,
-        onHowItWorksPressed: _showHowItWorksDialog,
-      ),
+      // drawer: CustomDrawer(
+      //   authService: authService,
+      //   onExportPressed: _showExportDialog,
+      //   onHowItWorksPressed: _showHowItWorksDialog,
+      // ),
       body: TabBarView(
         controller: _tabController,
         children: [
@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           SafeArea(
             child: Column(
               children: [
-                TimerHeader(timeLeft: _timeLeft),
+                // TimerHeader(timeLeft: _timeLeft),
                 Expanded(
                   child: _isLoading 
                     ? Center(

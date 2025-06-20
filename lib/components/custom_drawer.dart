@@ -113,62 +113,62 @@ class CustomDrawer extends StatelessWidget {
         ),
 
         // Settings
-        ListTile(
-          leading: Icon(Symbols.settings_rounded, size: 24),
-          title: Text('Settings'),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsScreen()),
-            );
-          },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-          ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 28, vertical: 8),
-        ),
+        // ListTile(
+        //   leading: Icon(Symbols.settings_rounded, size: 24),
+        //   title: Text('Settings'),
+        //   onTap: () {
+        //     Navigator.pop(context);
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => SettingsScreen()),
+        //     );
+        //   },
+        //   shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(28),
+        //   ),
+        //   contentPadding: EdgeInsets.symmetric(horizontal: 28, vertical: 8),
+        // ),
 
         const SizedBox(height: 16),
         Divider(indent: 28, endIndent: 28),
         const SizedBox(height: 8),
 
-        // Logout
-        ListTile(
-          leading: Icon(Symbols.logout_rounded, size: 24, color: colorScheme.error),
-          title: Text('Logout', style: TextStyle(color: colorScheme.error)),
-          onTap: () {
-            Navigator.pop(context);
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Logout'),
-                content: const Text('Are you sure you want to logout?'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel'),
-                  ),
-                  FilledButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      authService.signOut();
-                    },
-                    child: const Text('Logout'),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: colorScheme.errorContainer,
-                      foregroundColor: colorScheme.onErrorContainer,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-          ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 28, vertical: 8),
-        ),
+        // // Logout
+        // ListTile(
+        //   leading: Icon(Symbols.logout_rounded, size: 24, color: colorScheme.error),
+        //   title: Text('Logout', style: TextStyle(color: colorScheme.error)),
+        //   onTap: () {
+        //     Navigator.pop(context);
+        //     showDialog(
+        //       context: context,
+        //       builder: (context) => AlertDialog(
+        //         title: const Text('Logout'),
+        //         content: const Text('Are you sure you want to logout?'),
+        //         actions: [
+        //           TextButton(
+        //             onPressed: () => Navigator.pop(context),
+        //             child: const Text('Cancel'),
+        //           ),
+        //           FilledButton(
+        //             onPressed: () {
+        //               Navigator.pop(context);
+        //               authService.signOut();
+        //             },
+        //             child: const Text('Logout'),
+        //             style: FilledButton.styleFrom(
+        //               backgroundColor: colorScheme.errorContainer,
+        //               foregroundColor: colorScheme.onErrorContainer,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     );
+        //   },
+        //   shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(28),
+        //   ),
+        //   contentPadding: EdgeInsets.symmetric(horizontal: 28, vertical: 8),
+        // ),
       ],
     ),
   );  
