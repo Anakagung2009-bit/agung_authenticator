@@ -8,7 +8,6 @@ import '../services/auth_service.dart';
 import '../components/no_search_results.dart';
 import '../components/empty_password_state.dart';
 import '../components/custom_app_bar.dart';
-import '../components/custom_drawer.dart';
 import 'add_password_screen.dart';
 
 class PasswordsScreen extends StatefulWidget {
