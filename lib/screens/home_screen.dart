@@ -11,6 +11,8 @@ import '../components/empty_state.dart';
 import '../components/no_search_results.dart';
 import 'export_authenticator_screen.dart';
 import 'passwords_screen.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,6 +29,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  
+  // FIX: Tambahkan variable yang hilang
+  List<Map<String, dynamic>> _totps = []; // Variable yang hilang!
   List<Map<String, dynamic>>? _cachedTotps;
   bool _isLoading = true;
   bool _isFabExpanded = false;
@@ -35,11 +40,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int _selectedIndex = 0;
   late final TabController _tabController;
 
-
   @override
   void initState() {
     super.initState();
     _startTimer();
+    _loadTotps();
     _searchController.addListener(() {
       setState(() {
         _searchQuery = _searchController.text;
@@ -59,13 +64,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   void _loadInitialData() async {
-    // Muat data TOTP sekali saat inisialisasi
     _totpService.getTOTPs().first.then((totps) {
       if (mounted) {
         setState(() {
           _cachedTotps = totps;
+          _totps = totps;
           _isLoading = false;
         });
+        // PENTING: Update widget setelah data dimuat
+        WidgetService.updateWidgetData(_totps);
       }
     });
   }
@@ -103,17 +110,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             _timeLeft = 30 - (newNow % 30);
           }
         });
+        
+        // Update widget setiap detik untuk countdown
+        WidgetService.updateWidget();
       }
     });
   }
   
-  void _refreshTotpData() {
-    // Muat ulang data TOTP hanya ketika periode berubah
+    void _refreshTotpData() {
     _totpService.getTOTPs().first.then((totps) {
       if (mounted) {
         setState(() {
           _cachedTotps = totps;
+          _totps = totps;
         });
+        // PENTING: Update widget setelah data di-refresh
+        WidgetService.updateWidgetData(_totps);
       }
     });
   }
@@ -171,11 +183,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             },
           )
         : null,
-      // drawer: CustomDrawer(
-      //   authService: authService,
-      //   onExportPressed: _showExportDialog,
-      //   onHowItWorksPressed: _showHowItWorksDialog,
-      // ),
       body: TabBarView(
         controller: _tabController,
         children: [
@@ -183,7 +190,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           SafeArea(
             child: Column(
               children: [
-                // TimerHeader(timeLeft: _timeLeft),
                 Expanded(
                   child: _isLoading 
                     ? Center(
@@ -343,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       },
     );
   }
-  
+
   Future<void> _syncTOTPData() async {
     setState(() {
       _isLoading = true;
@@ -370,6 +376,59 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       setState(() {
         _isLoading = false;
       });
+    }
+  }
+
+  // FIX: Perbaiki method _loadTotps
+  Future<void> _loadTotps() async {
+    _totpService.getTOTPs().first.then((totps) {
+      if (mounted) {
+        setState(() {
+          _totps = totps;
+          _cachedTotps = totps; // Update kedua variable
+        });
+        // Update widget data setiap kali TOTP di-load
+        WidgetService.updateWidgetData(_totps);
+      }
+    });
+  }
+}
+
+// Widget Service untuk komunikasi dengan Android Widget
+// Di home_screen.dart, update WidgetService
+class WidgetService {
+  static const platform = MethodChannel('com.example.agung_auth/widget');
+
+  static Future<void> updateWidgetData(List<Map<String, dynamic>> totps) async {
+    try {
+      // Convert TOTP data to JSON dengan format yang benar
+      final widgetData = totps.map((totp) => {
+        'name': totp['name'] ?? 'Unknown',
+        'secret': totp['secret'] ?? '',
+      }).toList();
+      
+      final jsonString = jsonEncode(widgetData);
+      
+      print('Sending widget data: $jsonString'); // Debug log
+      
+      await platform.invokeMethod('updateWidgetData', {
+        'totpData': jsonString,
+      });
+      
+      // Juga update widget setelah data dikirim
+      await platform.invokeMethod('updateWidget');
+      
+      print('Widget data updated successfully');
+    } catch (e) {
+      print('Error updating widget data: $e');
+    }
+  }
+
+  static Future<void> updateWidget() async {
+    try {
+      await platform.invokeMethod('updateWidget');
+    } catch (e) {
+      print('Error updating widget: $e');
     }
   }
 }

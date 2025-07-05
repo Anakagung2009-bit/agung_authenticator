@@ -150,8 +150,8 @@ class TOTPService {
   }
   
   // Mendapatkan semua TOTP untuk user saat ini
-  Stream<List<Map<String, dynamic>>> getTOTPs() {
-    final user = _auth.currentUser;
+   Stream<List<Map<String, dynamic>>> getTOTPs() {
+    final user = _auth.currentUser ;
     if (user == null) {
       return Stream.value([]);
     }
@@ -170,24 +170,16 @@ class TOTPService {
             data['id'] = doc.id;
             
             // Dekripsi data sensitif
-           if (data.containsKey('encryptedSecret') && data.containsKey('secretIv')) {
-            try {
-                print('Dekripsi secret: ${data['encryptedSecret']}, IV: ${data['secretIv']}');
+            if (data.containsKey('encryptedSecret') && data.containsKey('secretIv')) {
+              try {
                 data['secret'] = await _decryptData(
                   encryptedData: data['encryptedSecret'],
                   ivString: data['secretIv'],
                   encryptionKey: encryptionKey,
                 );
               } catch (e) {
-                print('Gagal dekripsi secret: $e');
                 continue; // Skip entri ini agar tidak crash
               }
-              // Hapus baris duplikasi berikut
-              // data['secret'] = await _decryptData(
-              //   encryptedData: data['encryptedSecret'],
-              //   ivString: data['secretIv'],
-              //   encryptionKey: encryptionKey,
-              // );
             }
             
             if (data.containsKey('encryptedName') && 
@@ -216,13 +208,14 @@ class TOTPService {
   }
   
   // Menambahkan TOTP baru
+   // Menambahkan TOTP baru
   Future<void> addTOTP({
     required String name,
     required String secret,
   }) async {
-    final user = _auth.currentUser;
+    final user = _auth.currentUser ;
     if (user == null) {
-      throw Exception('User tidak terautentikasi');
+      throw Exception('User  tidak terautentikasi');
     }
     
     // Dapatkan kunci enkripsi
@@ -239,7 +232,6 @@ class TOTPService {
       encryptionKey: encryptionKey,
     );
     
-    
     // Simpan data terenkripsi ke Firestore
     await _firestore
         .collection('users')
@@ -251,16 +243,16 @@ class TOTPService {
           'secretIv': encryptedSecret['iv'],
           'encryptedName': encryptedName['data'],
           'nameIv': encryptedName['iv'],
-
           'createdAt': FieldValue.serverTimestamp(),
         });
   }
+
   
   // Menghapus TOTP
-  Future<void> deleteTOTP(String id) async {
-    final user = _auth.currentUser;
+ Future<void> deleteTOTP(String id) async {
+    final user = _auth.currentUser ;
     if (user == null) {
-      throw Exception('User tidak terautentikasi');
+      throw Exception('User  tidak terautentikasi');
     }
     
     await _firestore

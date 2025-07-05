@@ -4,17 +4,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase_options.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/welcome_screen.dart';
 import 'services/auth_service.dart';
 import 'services/auth_check.dart';
 import 'services/theme_service.dart';
 import 'services/totp_service.dart';
-
 import 'services/update_service.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,13 +36,14 @@ void main() async {
   );
 
   // Fungsi untuk update widget
-  Future<void> updateWidget() async {
-    try {
-      await platform.invokeMethod('updateWidget');
-    } on PlatformException catch (e) {
-      print("Failed to update widget: '${e.message}'.");
-    }
-  }
+  // Future<void> updateWidget() async {
+  //  try {
+  //     await platform.invokeMethod('updateWidget');
+  //     print("Widget update invoked!");
+  //   } catch (e) {
+  //     print("Error updating widget: $e");
+  //   }
+  // }
 
   runApp(
     MultiProvider(
@@ -52,7 +53,6 @@ void main() async {
       ],
       child: const MyAppWithTheme(),
     ),
-    
   );
 }
 
@@ -71,9 +71,50 @@ class MyAppWithTheme extends StatelessWidget {
           darkTheme: themeService.getDarkTheme(darkDynamicColor),
           themeMode: themeService.themeMode,
           debugShowCheckedModeBanner: false,
-          home: const AuthWrapper(),
+          home: const AppInitializer(),
         );
       },
+    );
+  }
+}
+
+class AppInitializer extends StatefulWidget {
+  const AppInitializer({Key? key}) : super(key: key);
+
+  @override
+  State<AppInitializer> createState() => _AppInitializerState();
+}
+
+class _AppInitializerState extends State<AppInitializer> {
+  @override
+  void initState() {
+    super.initState();
+    _checkFirstTime();
+  }
+
+  Future<void> _checkFirstTime() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isFirstTime = prefs.getBool('first_time') ?? true;
+
+    if (mounted) {
+      if (isFirstTime) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+        );
+      } else {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const AuthWrapper()),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
@@ -94,7 +135,7 @@ class _AuthWrapperState extends State<AuthWrapper> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     _syncEncryptionKey();
 
-      // Tambahkan ini untuk auto check update
+    // Tambahkan ini untuk auto check update
     WidgetsBinding.instance.addPostFrameCallback((_) {
       UpdateService.checkForUpdate(context);
     });

@@ -1,67 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1E1E1E"
+    android:padding="12dp">
 
-    <!-- Bagian 1 -->
+    <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#2D2D2D"
         android:padding="8dp"
-        android:background="#212121">
+        android:layout_marginBottom="8dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Agung Authenticator"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_weight="1"
+            android:text="Agung Auth"
             android:textColor="#FFFFFF"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:id="@+id/totp_code_text_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Memuat kode..."
-            android:textSize="24sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="4dp"/>
-
-        <TextView
-            android:id="@+id/totp_code_text_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Memuat kode..."
-            android:textSize="24sp"
-            android:textColor="#FFFFFF"/>
-    </LinearLayout>
-
-    <!-- Bagian 2 -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/widget_background"
-        android:padding="8dp">
-
-        <TextView
-            android:id="@+id/widget_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:text="Agung Authenticator"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
-        <ListView
-            android:id="@+id/widget_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/widget_title"
-            android:layout_marginTop="8dp" />
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/widget_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30s"
+            android:textColor="#FF9800"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:background="#333333"
+            android:padding="4dp"
+            android:minWidth="24dp"
+            android:gravity="center" />
+    </LinearLayout>
 
-</FrameLayout>
+    <!-- TOTP Items -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- TOTP Item 1 -->
+        <LinearLayout
+            android:id="@+id/totp_item_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#2D2D2D"
+            android:padding="12dp"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:id="@+id/totp_name_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Service Name"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/totp_code_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="123 456"
+                android:textColor="#4CAF50"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- TOTP Item 2 -->
+        <LinearLayout
+            android:id="@+id/totp_item_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#2D2D2D"
+            android:padding="12dp"
+            android:layout_marginBottom="4dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/totp_name_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Service Name"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/totp_code_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="123 456"
+                android:textColor="#4CAF50"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- TOTP Item 3 -->
+        <LinearLayout
+            android:id="@+id/totp_item_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#2D2D2D"
+            android:padding="12dp"
+            android:layout_marginBottom="4dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/totp_name_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Service Name"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/totp_code_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="123 456"
+                android:textColor="#4CAF50"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Open App Button -->
+    <TextView
+        android:id="@+id/widget_open_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Open Agung Auth"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:background="#6200EE"
+        android:padding="8dp"
+        android:gravity="center"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>

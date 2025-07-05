@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import '../services/password_service.dart';
+import '../components/account_icon.dart'; // Import widget baru
 
 class AddPasswordScreen extends StatefulWidget {
   const AddPasswordScreen({Key? key}) : super(key: key);
@@ -46,32 +47,26 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
   }
 
   Future<void> _savePassword() async {
-    // 1. Validasi form terlebih dahulu
     if (!_formKey.currentState!.validate()) {
       return;
     }
     
-    // 2. Simpan data yang diperlukan sebelum operasi asinkron
     final String accountType = _selectedAccountType;
     final String accountNameText = _accountNameController.text.trim();
     final String username = _usernameController.text;
     final String password = _passwordController.text;
     
-    // 3. Aktifkan loading state (dengan pemeriksaan mounted)
     if (!mounted) return;
     setState(() {
       _isLoading = true;
     });
     
-    // 4. Lakukan operasi asinkron dalam blok try-catch
     bool success = false;
     String? errorMessage;
     
     try {
-      // Tentukan nama akun (gunakan tipe akun jika nama kosong)
       final String accountName = accountNameText.isEmpty ? accountType : accountNameText;
       
-      // Simpan password ke database
       await _passwordService.addPassword(
         accountType: accountType,
         accountName: accountName,
@@ -84,20 +79,14 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
       errorMessage = e.toString();
     }
     
-    // 5. Gunakan post-frame callback untuk menangani UI updates dengan aman
-    // Ini akan dijalankan pada frame berikutnya, setelah build selesai
-    // sehingga tidak akan menyebabkan error widget unmounted
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      // Periksa apakah widget masih mounted
       if (!mounted) return;
       
-      // Update loading state
       setState(() {
         _isLoading = false;
       });
       
       if (success) {
-        // Tampilkan pesan sukses
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Password saved successfully'),
@@ -105,10 +94,8 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
           ),
         );
         
-        // Kembali ke layar sebelumnya
         Navigator.of(context).pop();
       } else if (errorMessage != null) {
-        // Tampilkan pesan error
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error: $errorMessage'),
@@ -118,40 +105,6 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
         );
       }
     });
-  }
-
-  IconData _getIconForAccountType(String accountType) {
-    switch (accountType.toLowerCase()) {
-      case 'google':
-        return Icons.g_mobiledata;
-      case 'microsoft':
-        return Icons.window;
-      case 'discord':
-        return Icons.discord;
-      case 'tiktok':
-        return Icons.music_note;
-      case 'facebook':
-        return Icons.facebook;
-      case 'twitter':
-      case 'x':
-        return Icons.alternate_email;
-      case 'instagram':
-        return Icons.camera_alt;
-      case 'github':
-        return Icons.code;
-      case 'linkedin':
-        return Icons.work;
-      case 'amazon':
-        return Icons.shopping_cart;
-      case 'apple':
-        return Icons.apple;
-      case 'netflix':
-        return Icons.movie;
-      case 'spotify':
-        return Icons.music_note;
-      default:
-        return Icons.lock;
-    }
   }
 
   @override
@@ -178,7 +131,7 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
             ),
             SizedBox(height: 24),
             
-            // Account Type Dropdown
+            // Account Type Dropdown dengan icon baru
             DropdownButtonFormField<String>(
               value: _selectedAccountType,
               decoration: InputDecoration(
@@ -186,12 +139,27 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                prefixIcon: Icon(_getIconForAccountType(_selectedAccountType)),
+                prefixIcon: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: AccountIcon(
+                    accountType: _selectedAccountType,
+                    size: 24,
+                  ),
+                ),
               ),
               items: _accountTypes.map((type) {
                 return DropdownMenuItem<String>(
                   value: type,
-                  child: Text(type),
+                  child: Row(
+                    children: [
+                      AccountIcon(
+                        accountType: type,
+                        size: 20,
+                      ),
+                      SizedBox(width: 12),
+                      Text(type),
+                    ],
+                  ),
                 );
               }).toList(),
               onChanged: (value) {
@@ -199,7 +167,6 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
                   setState(() {
                     _selectedAccountType = value;
                     
-                    // Reset account name if it matches the previous account type
                     if (_accountNameController.text == _selectedAccountType) {
                       _accountNameController.clear();
                     }
@@ -284,7 +251,6 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
             // Generate Password Button
             FilledButton.tonal(
               onPressed: () {
-                // Generate a random secure password
                 final password = _generateSecurePassword();
                 _passwordController.text = password;
               },
@@ -335,19 +301,16 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
     
     String password = '';
     
-    // Ensure at least one character from each category
     password += uppercaseChars[random % uppercaseChars.length];
     password += lowercaseChars[(random ~/ 10) % lowercaseChars.length];
     password += numericChars[(random ~/ 100) % numericChars.length];
     password += specialChars[(random ~/ 1000) % specialChars.length];
     
-    // Fill the rest with random characters from all categories
     final allChars = uppercaseChars + lowercaseChars + numericChars + specialChars;
     for (int i = password.length; i < passwordLength; i++) {
       password += allChars[(random ~/ (i * 1000)) % allChars.length];
     }
     
-    // Shuffle the password characters
     final passwordChars = password.split('');
     passwordChars.shuffle();
     

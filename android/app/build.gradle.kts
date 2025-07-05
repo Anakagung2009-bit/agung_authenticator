@@ -27,7 +27,7 @@ android {
     minSdk = flutter.minSdkVersion
     targetSdk = flutter.targetSdkVersion
     versionCode = 1 // <-- HARUS integer
-    versionName = "1.0.5" // <-- Ini boleh string
+    versionName = "1.0.6" // <-- Ini boleh string
     }   
 
     buildTypes {
@@ -45,6 +45,7 @@ dependencies {
     implementation("androidx.fragment:fragment:1.3.6")
     implementation("androidx.credentials:credentials:1.6.0-alpha02")
     implementation("androidx.credentials:credentials-play-services-auth:1.6.0-alpha02")
+    implementation("com.google.android.material:material:1.5.0")
 }
 
 

@@ -33,6 +33,8 @@ dependencies:
   flutter_autoupdate: ^1.0.0
   pub_semver: ^2.2.0
   package_info_plus: ^8.3.0
+  flutter_svg: ^2.2.0
+  cached_network_image: ^3.4.1
   
 dev_dependencies:
   flutter_test:

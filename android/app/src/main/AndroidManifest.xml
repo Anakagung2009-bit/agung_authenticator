@@ -33,9 +33,13 @@
             android:value="2" />
 
         <!-- TOTP Widget -->
-        <receiver android:name=".TOTPWidgetProvider" android:exported="true">
+        <receiver
+            android:name=".widget.TOTPWidgetProvider"
+            android:exported="true"
+            android:label="Agung Auth Widget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.agung_auth.COPY_CODE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"

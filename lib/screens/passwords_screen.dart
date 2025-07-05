@@ -8,7 +8,9 @@ import '../services/auth_service.dart';
 import '../components/no_search_results.dart';
 import '../components/empty_password_state.dart';
 import '../components/custom_app_bar.dart';
+import '../components/account_icon.dart'; // Import widget baru
 import 'add_password_screen.dart';
+
 
 class PasswordsScreen extends StatefulWidget {
   const PasswordsScreen({Key? key}) : super(key: key);
@@ -138,11 +140,9 @@ class _PasswordsScreenState extends State<PasswordsScreen> {
                       ),
                     ],
                   ),
-                  child: Icon(
-                    _getIconForAccountType(password.accountType),
-                    color: colorScheme.onSecondaryContainer,
+                  child: AccountIcon(
+                    accountType: password.accountType,
                     size: 28,
-                    weight: 500,
                   ),
                 ),
               ),
@@ -596,11 +596,9 @@ class _PasswordsScreenState extends State<PasswordsScreen> {
                       ),
                     ],
                   ),
-                  child: Icon(
-                    _getIconForAccountType(password.accountType),
-                    color: colorScheme.onSecondaryContainer,
+                  child: AccountIcon(
+                    accountType: password.accountType,
                     size: 28,
-                    weight: 500,
                   ),
                 ),
               ),
